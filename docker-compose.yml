@@ -8,8 +8,8 @@ services:
     depends_on:
       - redis
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_URL=redis://:wXe7ASTJbC04hQ832gHa95DO6Lq1PlyW@free.clusters.zeabur.com:32764
+
     volumes:
      - .:/app
      - /app/node_modules
