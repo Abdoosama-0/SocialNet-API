@@ -4,12 +4,9 @@ services:
     build: .
     container_name: my-node-app
     ports:
-      - "4000:3000"
+      - "3000:3000"
     depends_on:
       - redis
-    environment:
-      - REDIS_URL=redis://:wXe7ASTJbC04hQ832gHa95DO6Lq1PlyW@free.clusters.zeabur.com:32764
-
     volumes:
      - .:/app
      - /app/node_modules
