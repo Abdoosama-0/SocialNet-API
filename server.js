@@ -15,7 +15,9 @@ app.get('/home',(req,res)=>{
     res.json({msg:"you are in the home page"})
 })
 //============
-
+app.get('/',(req,res)=>{
+    res.json({msg:"Mine"})
+})
 //===============================================================================
 app.use(cookieParser())
 const cors = require('cors');
