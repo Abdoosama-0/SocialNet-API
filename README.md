@@ -51,17 +51,14 @@ This is a scalable and secure backend for a social media platform built using **
    cd SocialNet-API
    ```
 3. Set up environment variables (.env file):
-
-   ```
- MONGODB_URI=<Your MongoDB URI>
+  ```
+MONGODB_URI=<Your MongoDB URI>
 REDIS_URL=<Your Redis URL>
 JWT_SECRET=<Your JWT Secret>
 CLOUDINARY_CLOUD_NAME=<Your Cloudinary Cloud Name>
 CLOUDINARY_API_KEY=<Your Cloudinary API Key>
 CLOUDINARY_API_SECRET=<Your Cloudinary API Secret>
 PORT=<Your SMTP Port>
-
-
    ```
 4. Install dependencies :
 
@@ -96,9 +93,6 @@ PORT=<Your SMTP Port>
 * Secure environment variables and HTTPS recommended for production.
 
 
-## 📄 License
-
-Licensed under the MIT License.
 
 ## 🙌 Contributions
 
