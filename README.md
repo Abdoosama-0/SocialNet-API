@@ -42,13 +42,13 @@ This is a scalable and secure backend for a social media platform built using **
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Abdoosama-0/ecommerce-platform.git
+   git clone https://github.com/Abdoosama-0/SocialNet-API.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd socialMediaApp-project
+   cd SocialNet-API
    ```
 3. Set up environment variables (.env file):
 
