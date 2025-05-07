@@ -36,43 +36,40 @@ This is a scalable and secure backend for a social media platform built using **
 * **Media Management:** Cloudinary
 * **Containerization:** Docker
 
-## ⚡ Getting Started
 
-### Prerequisites
+### 🚀 Installation
 
-* Node.js (v16+)
-* Docker
-* MongoDB (Local or Cloud)
-* Cloudinary Account
-* Redis
+1. Clone the repository:
 
-### Installation
+   ```bash
+   git clone https://github.com/Abdoosama-0/ecommerce-platform.git
+   ```
 
-```bash
-# Clone the repository
-git clone <https://github.com/Abdoosama-0/socialMediaApp-project.git>
+2. Navigate to the project directory:
 
-# Navigate to the project directory
-cd social-media-platform
+   ```bash
+   cd socialMediaApp-project
+   ```
+3. Set up environment variables (.env file):
 
-# Install dependencies
-npm install
-
-# Create a .env file and configure the following variables:
-MONGODB_URI=<Your MongoDB URI>
+   ```
+ MONGODB_URI=<Your MongoDB URI>
 REDIS_URL=<Your Redis URL>
 JWT_SECRET=<Your JWT Secret>
 CLOUDINARY_CLOUD_NAME=<Your Cloudinary Cloud Name>
 CLOUDINARY_API_KEY=<Your Cloudinary API Key>
 CLOUDINARY_API_SECRET=<Your Cloudinary API Secret>
-SMTP_HOST=<Your SMTP Host>
-SMTP_PORT=<Your SMTP Port>
-SMTP_USER=<Your SMTP User>
-SMTP_PASS=<Your SMTP Password>
+PORT=<Your SMTP Port>
 
-# Start the application using Docker
-docker-compose up --build
-```
+
+   ```
+4. Install dependencies :
+
+   ```bash
+   npm install
+   npm run dev
+   ```
+
 
 ### API Documentation
 
@@ -84,7 +81,6 @@ docker-compose up --build
 
 ```
 /social-media-platform
-├── src
 ├── controllers
 ├── middleware
 ├── models
@@ -99,11 +95,6 @@ docker-compose up --build
 * Easily deployable with Docker.
 * Secure environment variables and HTTPS recommended for production.
 
-## 🚀 Future Improvements
-
-* Real-time notifications using WebSocket.
-* Enhanced search and filtering options.
-* Improved security with rate limiting.
 
 ## 📄 License
 
