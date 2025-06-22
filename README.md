@@ -52,13 +52,28 @@ This is a scalable and secure backend for a social media platform built using **
    ```
 3. Set up environment variables (.env file):
   ```
-MONGODB_URI=<Your MongoDB URI>
-REDIS_URL=<Your Redis URL>
-JWT_SECRET=<Your JWT Secret>
-CLOUDINARY_CLOUD_NAME=<Your Cloudinary Cloud Name>
-CLOUDINARY_API_KEY=<Your Cloudinary API Key>
-CLOUDINARY_API_SECRET=<Your Cloudinary API Secret>
-PORT=<Your SMTP Port>
+MONGODB_URI = your_mongodb_uri
+
+GOOGLE_CLIENT_ID = your_google_client_id
+GOOGLE_CLIENT_SECRET = your_google_client_secret
+CALLBACK_URL = your_callback_url
+
+COOKIE_SECRET = your_cookie_secret
+
+SECRET_TOKEN = your_secret_token
+
+CLOUD_NAME = your_cloud_name
+API_KEY = your_api_key
+API_SECRET = your_api_secret
+
+EMAIL_USER = your_email_user
+EMAIL_PASS = your_email_pass
+
+REDIS_HOST = your_redis_host
+REDIS_PORT = your_redis_port
+REDIS_USERNAME = your_redis_username
+REDIS_PASSWORD = your_redis_password
+
    ```
 4. Install dependencies :
 
