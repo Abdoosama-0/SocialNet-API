@@ -4,11 +4,14 @@ const express = require("express")
 const app=express()
 app.use(express.json())
 
-
+const redis = require("./config/redis") 
+redis.set("testKey1", "hello world")
 const cookieParser = require("cookie-parser");
+
+require('./config/database') 
 //=======================================connect to database======================
-const connectDB=require("./config/database")
-connectDB()
+// const connectDB=require("./config/database")
+// connectDB()
 
 //=================
 app.get('/home',(req,res)=>{

@@ -1,16 +1,22 @@
+//database-MC7PGOT2
+require('dotenv').config();
 const Redis = require("ioredis");
- 
+    const redis = new Redis({
+  host: process.env.REDIS_HOST ,
+  port: process.env.REDIS_PORT ,
+  username: process.env.REDIS_USERNAME ,  
+  password: process.env.REDIS_PASSWORD ,
 
-const redis = new Redis(process.env.REDIS_URL);
-/**    { host:  "127.0.0.1",
-    port:  6379,}
-     */
+});
+
 redis.on("connect", () => {
-    console.log("✅ Connected to Redis ");
+  console.log("✅ Connected to Redis");
 });
 
 redis.on("error", (err) => {
-    console.error("❌ Redis Error: ", err);
+  console.error("❌ Redis error:", err);
 });
 
-module.exports = redis;
+redis.set("testKey", "hello world") //View and manage data with Redis Insight 
+
+module.exports = redis; 
