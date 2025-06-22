@@ -4,6 +4,11 @@
 
 This is a scalable and secure backend for a social media platform built using **Node.js**, **Express**, **Docker**, **Redis**, and **MongoDB**. It offers users essential social media functionalities, including post creation, likes, comments, user profile management, and a robust admin dashboard.
 
+## 🌐 Live API Preview
+The API is deployed on Railway and is accessible publicly for testing.
+[Go to Live demo](https://socialnet-api-production.up.railway.app/)
+
+
 ## 🚀 Features
 
 * **Authentication & Authorization:**
