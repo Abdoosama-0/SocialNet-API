@@ -6,7 +6,7 @@ This is a scalable and secure backend for a social media platform built using **
 
 ## 🌐 Live API Preview
 The API is deployed on Railway and is accessible publicly for testing.
-[Go to Live demo](https://socialnet-api-production.up.railway.app/)
+[Go to Live demo](https://socialnet-api-production.up.railway.app)
 
 ## 🔗 Postman Public Workspace  
 You can explore and test all API endpoints through the public Postman workspace below:  
