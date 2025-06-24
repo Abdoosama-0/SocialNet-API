@@ -4,21 +4,21 @@ const {getAllPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,de
 const upload=require('../config/multer')
 //==========================================================================
 const {verifyToken}=require('../Middleware/authMiddleware')
-router.use(verifyToken)
+router.use(verifyToken)// ensure that you are logged in before accessing any of the routes
 //==========================================================================
 
 router.get('/posts',getAllPosts)
 
 
-router.post('/post', upload.array("images", 5), createPost);
+router.post('/addPost', upload.array("images", 5), createPost);
 
 router.get('/:postId',getPost)
 
 router.get('/userPosts/:userId',getUserPosts)
 
-router.patch('/post/:postId', upload.array("imageUrls", 5), updatePost);
+router.patch('/:postId', upload.array("images", 5), updatePost);
 
-router.delete('/post/:postId',deletePost)
+router.delete('/:postId',deletePost)
 //===================================================
 router.post('/Like/:postId',Like)
 //===================================================

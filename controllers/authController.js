@@ -23,7 +23,7 @@ const localLogin = (req, res, next) => {
       await redis.set(`refresh:${user._id.toString()}`,  refreshToken); 
       res.cookie("access_token", accessToken, { httpOnly: true, secure: false, });
       
-      return res.send('logged in successfully , you are in home page')//res.redirect('/Home')
+      return res.json({msg:'logged in successfully' , userData:user, accessToken, refreshToken });
   })(req, res, next)
 }
 
@@ -57,7 +57,7 @@ const logout=async(req,res)=>{
      
     res.clearCookie("access_token");
     await redis.del(`refresh:${req.user.userID}`);
-    res.status(200).json({msg:"logged out"})
+    res.status(200).json({msg:"Logged out successfully"})
   
 
 }
@@ -101,7 +101,7 @@ const profileImageURL = req.file ? req.file.path : undefined;
          profileImageURL
     })
     await newUser.save()
-    res.send("welcome")//res.redirect('/auth/login')
+    res.json({msg:"User registered successfully", yourData:newUser})
 
 }
 

@@ -3,7 +3,7 @@ const User=require('../models/User')
 
 const getAllPosts =async (req,res)=>{
     const allPosts= await Post.find().populate('author', 'name profileImageURL')
-    return res.json({posts:allPosts})
+    return res.json({msg:"all posts for you" ,posts:allPosts})
 }
 
 const getPost=async (req,res)=>{
@@ -19,22 +19,23 @@ const createPost =async (req,res)=>{
     const {title}=req.body
     authorId=req.user.userID
     //===========================================================================
-    let imageUrls = []; 
+    let images = []; 
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: "No images uploaded" });
         }
-       imageUrls = req.files.map((file) => file.path);
+       images = req.files.map((file) => file.path);
  //===========================================================================
 
     const newPost= new Post({
         title,
         author:authorId,
-        imageUrls
+        images
     })
     await newPost.save()
     const user=await User.findById(authorId)
     user.posts.push(newPost._id)
     await user.save();
+    console.log(newPost)
     res.json({post:newPost})
 
 }
@@ -58,7 +59,7 @@ const updatePost= async(req,res)=>{
     if(userId!==post.author.toString()){return res.status(401).json({msg:"you can't update this post"})}
 
     if (req.files && req.files.length > 0) {
-        req.body.imageUrls = req.files.map((file) => file.path);;
+        req.body.images = req.files.map((file) => file.path);;
 
     }
 

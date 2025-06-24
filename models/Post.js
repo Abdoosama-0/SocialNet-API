@@ -14,7 +14,7 @@ const postSchema = new Schema({
 
     title: {type: String},
 
-    imageUrls: [{ type: String }],
+    images: [{ type: String }],
 
     comments: [commentSchema],
 

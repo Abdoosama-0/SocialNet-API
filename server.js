@@ -9,27 +9,22 @@ redis.set("testKey1", "hello world")
 const cookieParser = require("cookie-parser");
 
 require('./config/database') 
-//=======================================connect to database======================
-// const connectDB=require("./config/database")
-// connectDB()
 
-//=================
-app.get('/home',(req,res)=>{
-    res.json({msg:"you are in the home page"})
-})
+
 //============
 app.get('/',(req,res)=>{
-    res.json({msg:"Mine"})
+    res.json({msg:"hello in SocialNet-API"})
 })
 //===============================================================================
 app.use(cookieParser())
 const cors = require('cors');
-app.use(cors(
-//     {
-//     origin: 'http://localhost:3000', // ضع رابط الفرونت هنا
-//     credentials: true // السماح بإرسال الكوكيز
-//   }
-));
+
+app.use(cors({
+     origin: (origin, callback) => {
+    callback(null, true); // السماح بأي origin
+  },
+    credentials: true,
+  }));
 
 
 
