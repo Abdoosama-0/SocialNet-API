@@ -4,13 +4,10 @@
 
 This is a scalable and secure backend for a social media platform built using **Node.js**, **Express**, **Docker**, **Redis**, and **MongoDB**. It offers users essential social media functionalities, including post creation, likes, comments, user profile management, and a robust admin dashboard.
 
-## 🌐 Live API Preview
-The API is deployed on Railway and is accessible publicly for testing.
-[Go to Live demo](https://socialnet-api-production.up.railway.app)
+## 📄 Postman API Documentation
+You can browse and test the full API documentation via the public Postman link below: 
 
-## 🔗 Postman Public Workspace  
-You can explore and test all API endpoints through the public Postman workspace below:  
-[🧪 Open SocialNet-API Workspace](https://www.postman.com/goatme/socialnet-api/overview)
+[🧪 Open API Documentation](https://www.postman.com/goatme/socialnet-api/documentation/k2av4ch/social-media-api)
 
 ## 🚀 Features
 
