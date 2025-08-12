@@ -1,6 +1,6 @@
 const express = require('express')
 const router=express.Router()
-const {getMyData,updateUserData,deleteUser,getMyPosts}=require('../controllers/userController')
+const {getMyData,updateUserData,deleteUser,follow}=require('../controllers/userController')
 
 //==============================================================
 const {verifyToken}=require('../Middleware/authMiddleware')
@@ -14,8 +14,8 @@ router.patch('/me',upload.single("profileImageURL"),updateUserData)
 
 router.delete('/me',deleteUser)
 
+router.post('/:userId/follow',follow)
 
-router.get('/me/myPosts',getMyPosts)
 
 
 //==========================================================================

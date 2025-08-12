@@ -4,11 +4,11 @@ const passport=require('passport')
 
 const bcrypt=require('bcrypt')
 const validator = require('validator');
-
+const crypto = require("crypto");
 //=========================================
 const jwt=require('jsonwebtoken')
 const redis=require('../config/redis')
-
+const nodemailer = require("nodemailer");
 //=========================================================================
 
 const localLogin = (req, res, next) => {
@@ -36,7 +36,7 @@ const googleAuthCallback=async (req, res, next) => {
             return res.status(400).json({ message: "Google authentication failed" });
         }
 
-        console.log("33333333333333333333333333333333333\n");console.log(user);console.log("33333333333333333333333333333333333\n")
+      
 
              //==========================================
       const Payload={userID:user.user._id.toString(),role:user.user.role}
@@ -45,7 +45,7 @@ const googleAuthCallback=async (req, res, next) => {
       await redis.set(`refresh:${user.user._id.toString()}`,  refreshToken); 
       res.cookie("access_token", accessToken, { httpOnly: true, secure: false, });
             //==========================================
-            return res.redirect('/Home')
+            return res.redirect('/')
         
 
 
@@ -66,7 +66,7 @@ const logout=async(req,res)=>{
 const register = async(req,res)=>{
     const {name,email,username,password}=req.body
 //===================================================================check email=============================================
-//is eil valid
+//is email valid
      if(!validator.isEmail(email)){
        return res.status(400).json({msg:"this is not an email"})
      }
@@ -89,21 +89,70 @@ if(!validator.isStrongPassword(password)){
 
 //================================================================================================================
 const profileImageURL = req.file ? req.file.path : undefined;
+const hashed =await bcrypt.hash(password,10)
+
+  const otp = crypto.randomInt(100000, 999999).toString();
+
+await redis.set(`OTP:${email}`, JSON.stringify({
+  otp,
+  name,
+  username,
+  email,
+  password: hashed,
+  expire: Date.now() + 5 * 60 * 1000 
+}), 'EX', 300);
 
 
+    const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+    await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Verify your email",
+    text: `Your verification code is: ${otp}`
+  });
 //================================================================================================================
-    const hashed =await bcrypt.hash(password,10)
-    const newUser=new User({
-         name,
-         email,
-         username,
-         password:hashed,
-         profileImageURL
-    })
-    await newUser.save()
-    res.json({msg:"User registered successfully", yourData:newUser})
+
+      res.json({ msg: "OTP sent to your email. Please verify to complete registration." });
 
 }
+
+const verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+const userDataB = await redis.get(`OTP:${email}`);
+if (!userDataB) {
+  return res.status(400).json({ msg: "OTP expired or not found" });
+}
+const userData = JSON.parse(userDataB);
+  if (Date.now() > userData.expire) {
+    delete pendingUsers[email];
+    return res.status(400).json({ msg: "OTP expired. Please register again." });
+  }
+
+  if (userData.otp !== otp) {
+    return res.status(400).json({ msg: "Invalid OTP" });
+  }
+
+
+  const newUser = new User({
+    name: userData.name,
+    email: userData.email,
+    username: userData.username,
+    password: userData.password
+  });
+  await newUser.save();
+
+
+    await redis.del(`OTP:${email}`); // Clear OTP after successful verification
+
+  res.json({ msg: "Email verified and registration completed successfully. Please login." });
+};
+
 
 //=========================================================================
 const {sendEmailWithLink} =require('../config/mailer')
@@ -119,9 +168,9 @@ const forgetPassword=async(req,res)=>{
         const response = await sendEmailWithLink(email, subject, linkText, linkUrl);
 
         if (response.success) {
-            return res.status(200).json({ msg: "تم إرسال البريد الإلكتروني بنجاح" });
+            return res.status(200).json({ msg: "Email sent successfully. If you do not see it in your inbox, please check your spam or junk folder."  });
         } else {
-            return res.status(500).json({ error: "فشل في إرسال البريد الإلكتروني" });
+            return res.status(500).json({ error: "Failed to send email" , error: response.error });
         }
 }
 
@@ -154,4 +203,4 @@ if(!validator.isStrongPassword(newPassword)){
 }
 //=========================================================================
 
-module.exports={register,localLogin,logout,googleAuth,googleAuthCallback,forgetPassword,recreatePassword}
+module.exports={register,localLogin,logout,googleAuth,googleAuthCallback,forgetPassword,recreatePassword,verifyOtp}

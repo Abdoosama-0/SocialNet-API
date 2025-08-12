@@ -2,8 +2,15 @@ const Post=require('../models/Post')
 const User=require('../models/User')
 
 const getAllPosts =async (req,res)=>{
-    const allPosts= await Post.find().populate('author', 'name profileImageURL')
-    return res.json({msg:"all posts for you" ,posts:allPosts})
+    console.log(req.user.userID)
+     const query = {
+      author: { $ne: req.user.userID } // استبعاد البوستات اللي صاحبها هو المستخدم الحالي
+    };
+
+
+    const allPosts= await Post.find(query).populate('author', 'name profileImageURL')
+    const count = await Post.countDocuments(query);
+    return res.json({msg:"all posts for you",count ,posts:allPosts})
 }
 
 const getPost=async (req,res)=>{
@@ -49,7 +56,15 @@ const getUserPosts= async(req,res)=>{
     console.log(user.posts)
     return res.status(200).json({msg:"success",allPosts:user.posts})
 }
-
+const getMyPosts= async(req,res)=>{
+    const userId=req.user.userID
+    const user=await User.findById(userId).populate('posts')
+ if(!user){
+        return res.status(404).json({msg:"user not found"})
+    }
+    const count= await Post.countDocuments({author:userId});
+    return res.status(200).json({msg:"success",count,allPosts:user.posts})
+}
 const updatePost= async(req,res)=>{
     const userId=req.user.userID
     const {postId}=req.params
@@ -177,7 +192,7 @@ const imageUrl=req.file?req.file.path:undefined
 
 }
 //=============================================
-module.exports={getAllPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,deletePost,deleteComment,updateComment}
+module.exports={getAllPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,deletePost,deleteComment,updateComment,getMyPosts}
 
 
 // const getUsersLiked=async(req,res)=>{

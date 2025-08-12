@@ -8,7 +8,7 @@ router.use(verifyToken)
 router.use(isAdmin)
 
 //==========================================================================
-router.delete('/user/:userId',deleteUser)
+router.delete('/deleteUser/:userId',deleteUser)
 router.get('/users',getUsers)
 
 

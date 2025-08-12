@@ -5,7 +5,13 @@ const {isValidEmail} = require('../utility/validate')
 const getMyData= async(req,res)=>{
     const user =await User.findById(req.user.userID)
     if(!user){ return res.status(404).json({msg:"there is no user"})}
-    return res.status(200).json({userData: user})
+    
+   return res.status(200).json({
+  posts: user.posts,                        
+  postsCount: user.posts.length,           
+  followersCount: user.followers.length,     
+  followingCount: user.following.length       
+});
 }
 
 const updateUserData=async(req,res)=>{
@@ -46,10 +52,36 @@ const deleteUser=async(req,res)=>{
     return res.status(200).json({msg:"user deleted successfully",user:user})
 }
 
-const getMyPosts= async(req,res)=>{
-    const id=req.user.userID
-    const user=await User.findById(id).populate('posts')
-    if(!user){ return res.status(404).json({msg:"there is no user"})}
-    return res.status(200).json({msg:"success",myPosts:user.posts})
+const follow = async(req,res)=>{
+    const userID =req.params.userId
+
+    if(!userID){
+        return res.status(400).json({msg:"Please provide a userID to follow"})
+    }
+
+    const user = await User.findById(req.user.userID);
+    if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+    }
+    const userToFollow = await User.findById(userID);
+    if (!userToFollow) {
+        return res.status(404).json({ msg: "User to follow not found" });
+    } 
+    if (user.following.includes(userID)) {
+    user.following = user.following.filter(id => id.toString() !== userID);
+     await user.save();
+    return res.status(200).json({ msg: "Unfollowed successfully", userToFollow }
+
+    );
+    }
+    else {
+    user.following.push(userID);
+    await user.save();
+    return res.status(200).json({ msg: "Followed successfully", userToFollow });
+    }
+    
+
 }
-module.exports={getMyData,updateUserData,deleteUser,getMyPosts}
+
+
+module.exports={getMyData,updateUserData,deleteUser,follow}

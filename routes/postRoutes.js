@@ -1,16 +1,18 @@
 const express = require('express')
 const router=express.Router()
-const {getAllPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,deletePost,deleteComment,updateComment}=require('../controllers/postController')
+const {getAllPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,
+    deletePost,deleteComment,updateComment,getMyPosts}=require('../controllers/postController')
 const upload=require('../config/multer')
 //==========================================================================
 const {verifyToken}=require('../Middleware/authMiddleware')
 router.use(verifyToken)// ensure that you are logged in before accessing any of the routes
 //==========================================================================
 
-router.get('/posts',getAllPosts)
+router.get('/',getAllPosts)
+router.get('/My',getMyPosts)
 
 
-router.post('/addPost', upload.array("images", 5), createPost);
+router.post('/', upload.array("images", 5), createPost);
 
 router.get('/:postId',getPost)
 
