@@ -3,7 +3,7 @@ const redis=require('../config/redis')
 const User=require('../models/User')
 const {isValidEmail} = require('../utility/validate')
 const getMyData= async(req,res)=>{
-    const user =await User.findById(req.user.userID)
+    const user =await User.findById(req.user.userID).populate('posts', 'title images createdAt author')
     if(!user){ return res.status(404).json({msg:"there is no user"})}
     
    return res.status(200).json({

@@ -17,6 +17,6 @@ redis.on("error", (err) => {
   console.error("❌ Redis error:", err);
 });
 
-redis.set("testKey", "hello world") //View and manage data with Redis Insight 
+//redis.set("testKey", "hello world") 
 
 module.exports = redis; 

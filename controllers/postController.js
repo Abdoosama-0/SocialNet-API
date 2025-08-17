@@ -1,16 +1,21 @@
 const Post=require('../models/Post')
 const User=require('../models/User')
 
-const getAllPosts =async (req,res)=>{
-    console.log(req.user.userID)
-     const query = {
-      author: { $ne: req.user.userID } // استبعاد البوستات اللي صاحبها هو المستخدم الحالي
-    };
+const getPosts =async (req,res)=>{
+    const limit = 10
+      const page = parseInt(req.query.page) || 1; // رقم الصفحة من query
+  const skip = (page - 1) * limit;
+    //  const query = {
+    //   author: { $ne: req.user.userID }
+    // };
 
 
-    const allPosts= await Post.find(query).populate('author', 'name profileImageURL')
-    const count = await Post.countDocuments(query);
-    return res.json({msg:"all posts for you",count ,posts:allPosts})
+    const Posts= await Post.find().populate('author', 'name profileImageURL').skip(skip).limit(limit)
+    if(!Posts || Posts.length === 0){
+        return res.status(404).json({msg:"no new posts found"})
+    }
+    const count = await Post.countDocuments();
+    return res.json({msg:`posts for you`,count ,posts:Posts})
 }
 
 const getPost=async (req,res)=>{
@@ -192,16 +197,7 @@ const imageUrl=req.file?req.file.path:undefined
 
 }
 //=============================================
-module.exports={getAllPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,deletePost,deleteComment,updateComment,getMyPosts}
+module.exports={getPosts,createPost,Like,getPost,getUserPosts,addComment,updatePost,deletePost,deleteComment,updateComment,getMyPosts}
 
 
-// const getUsersLiked=async(req,res)=>{
-//     const {postId}=req.body
-//     const post= await Post.findById(postId)
-//     if(!post){
-//         res.status(404).json({ message: "post not found" });
-//     }
-//     const likes=post.likes
-//     return res.json({usersLikes:likes})
-// }
 
